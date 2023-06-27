@@ -1,5 +1,4 @@
 ---
-
 - name: Ubuntu desktop environment playbook
   hosts: localhost
   roles:
@@ -17,7 +16,26 @@
     # - { role: beanstalkd, become: true }
     # - { role: blackfire, become: true }
     # - { role: composer, become: true }
-     - { role: ansible-role-docker, become: true }
+     - role: haxorof.docker_ce
+       become: true
+       docker_users:
+         - nick
+       docker_compose: true 
+     - { role: gantsign.visual-studio-code, become: true }
+     - role: gantsign.oh-my-zsh
+       become: true 
+       users:
+         - username: nick
+       plugins:
+        - git
+        - zsh-autosuggestions
+        - zsh-syntax-highlighting
+        - zsh-z
+        - kubectl
+       update_mode: auto
+       write_zshrc: false
+     - role: 0x0I.tmux
+       become: true
     # - { role: elasticsearch, become: true }
     # - { role: exim, become: true }
     # - { role: fail2ban, become: true }
@@ -63,7 +81,7 @@
     # - { role: hubic, become: true }
     # - { role: indicator-sysmonitor, become: true }
     # - { role: ksuperkey, become: true }
-     - { role: libreoffice, become: true }
+    # - { role: libreoffice, become: true }
     # - { role: maim, become: true }
     # - { role: min, become: true }
     # - { role: mysql-workbench, become: true }

@@ -17,7 +17,11 @@ else
     echo "Ansible already installed"
 fi
 
+ansible-galaxy install gantsign.visual-studio-code
+ansible-galaxy install viasite-ansible.zsh
+ansible-galaxy install 0x0I.tmux
+ansible-galaxy install haxorof.docker_ce
 #####################################
 # Display real installation process #
 ansible-playbook --ask-become-pass -i hosts ansible-desktop.yml
-
+cp dotfiles/.zshrc ~/.zshrc
