@@ -123,3 +123,25 @@
     # - { role: browsersync }
     # - { role: bower }
     # - { role: webpack }
+  tasks:
+    - name: copy git config
+      copy: 
+        src: dotfiles/.gitconfig
+        dest: /home/nick/.gitconfig
+      delegate_to: localhost
+    - name: copy zsh config
+      copy: 
+        src: dotfiles/.zshrc
+        dest: /home/nick/.zshrc
+      delegate_to: localhost
+    - name: Create "docker" group
+      become: true
+      group:  
+        name: "docker"
+        state: present
+    - name: Add remote "ubuntu" user to "docker" group
+      become: true
+      user:
+        name: "nick"
+        group: "docker"
+        append: yes

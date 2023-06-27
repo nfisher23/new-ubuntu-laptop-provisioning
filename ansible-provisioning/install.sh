@@ -21,7 +21,7 @@ ansible-galaxy install gantsign.visual-studio-code
 ansible-galaxy install viasite-ansible.zsh
 ansible-galaxy install 0x0I.tmux
 ansible-galaxy install haxorof.docker_ce
+ansible-galaxy install alzadude.firefox-addon
 #####################################
 # Display real installation process #
 ansible-playbook --ask-become-pass -i hosts ansible-desktop.yml
-cp dotfiles/.zshrc ~/.zshrc

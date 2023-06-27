@@ -118,8 +118,6 @@ export PATH="$PATH:/home/nick/.local/share/JetBrains/Toolbox/scripts"
 # turn off tilde pasting
 printf "\e[?2004l"
 
-alias docker="sudo docker"
-alias docker-compose="sudo docker-compose"
 alias dc="docker-compose"
 alias d="docker"
 alias python="python3"
