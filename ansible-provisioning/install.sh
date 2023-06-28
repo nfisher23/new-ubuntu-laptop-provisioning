@@ -13,16 +13,14 @@ if ! hash ansible >/dev/null 2>&1; then
     sudo apt-get install software-properties-common ansible git -y
     sudo apt update
     sudo apt install python3-pip -y
+    sudo snap install yq
 else
     echo "Ansible already installed"
 fi
 
-ansible-galaxy install gantsign.visual-studio-code
-ansible-galaxy install viasite-ansible.zsh
-ansible-galaxy install 0x0I.tmux
-ansible-galaxy install haxorof.docker_ce
-ansible-galaxy install githubixx.kubectl
-ansible-galaxy install gantsign.golang
+# auto install all galaxy roles, assuming a dot
+ansible-galaxy install $(cat ansible-desktop.yml| yq -r ".[].roles[] | .role" | grep '\.')
+
 #####################################
 # Display real installation process #
 ansible-playbook --ask-become-pass -i hosts ansible-desktop.yml

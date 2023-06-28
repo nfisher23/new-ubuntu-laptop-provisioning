@@ -10,7 +10,17 @@
        become: true
        golang_install_dir: "/usr/local/go"
     # - { role: dotfiles, become: true }
-    # - { role: java-openjdk, become: true }
+     - { role: geerlingguy.java, become: true }
+     - role: gantsign.maven
+       become: true
+       maven_version: '3.3.9'
+       maven_is_default_installation: true
+       maven_fact_group_name: maven
+     - role: webarchitect609.jet_brains_toolbox
+       become: true
+     - role: gantsign.intellij
+       become: true
+       intellij_default_maven_home: '/opt/maven/apache-maven-3.3.9'
      - role: githubixx.kubectl
        become: true
      - role: haxorof.docker_ce
@@ -48,6 +58,7 @@
      - { role: gimp, become: true }
      - { role: thunderbird, become: true }
   tasks:
+    # dotfiles, zsh
     - name: copy git config
       copy: 
         src: dotfiles/.gitconfig
@@ -86,6 +97,7 @@
         path: /home/nick/.secrets
         state: touch
         mode: u=rw,g=r,o=r
+      # docker
     - name: Create "docker" group
       become: true
       group:  
@@ -97,3 +109,19 @@
         name: "nick"
         group: "docker"
         append: yes
+    - name: install bitwarden
+      become: true
+      community.general.snap: 
+        name: bitwarden
+    # onedrive client
+    - name: onedrive gpg
+      become: true
+      shell: wget -qO - https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /usr/share/keyrings/obs-onedrive.gpg > /dev/null
+    - name: open suse build service repo
+      become: true
+      shell: echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/obs-onedrive.gpg] https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_22.04/ ./" | sudo tee /etc/apt/sources.list.d/onedrive.list
+    - name: install onedrive client
+      ansible.builtin.apt:
+        name: onedrive
+        install_recommends: false
+
