@@ -16,6 +16,8 @@
     # - { role: beanstalkd, become: true }
     # - { role: blackfire, become: true }
     # - { role: composer, become: true }
+     - role: githubixx.kubectl
+       become: true
      - role: haxorof.docker_ce
        become: true
        docker_users:
