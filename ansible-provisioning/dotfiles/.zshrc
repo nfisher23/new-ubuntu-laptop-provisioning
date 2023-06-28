@@ -76,7 +76,7 @@ plugins=(
 git
 zsh-autosuggestions
 zsh-syntax-highlighting
-zsh-z
+z
 kubectl
 )
 
