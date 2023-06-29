@@ -18,9 +18,13 @@
        maven_fact_group_name: maven
      - role: webarchitect609.jet_brains_toolbox
        become: true
-     - role: gantsign.intellij
-       become: true
-       intellij_default_maven_home: '/opt/maven/apache-maven-3.3.9'
+       toolbox_install_for_user: "nick"
+       toolbox_install_dir: /usr/local/bin
+    #  - role: gantsign.intellij-plugins
+    #    users:
+    #      - username: nick
+    #        intellij_plugins:
+    #          - Go
      - role: githubixx.kubectl
        become: true
      - role: haxorof.docker_ce
@@ -125,7 +129,12 @@
       ansible.builtin.apt:
         name: onedrive
         install_recommends: false
-    # chatgpt
+    - name: copy onedrive sync list
+      copy: 
+        src: dotfiles/onedrive_sync_list
+        dest: /home/nick/.config/onedrive/sync_list
+      delegate_to: localhost
+    # ai tools
     - name: chatgpt
       ansible.builtin.pip:
         name:
