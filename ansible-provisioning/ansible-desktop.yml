@@ -31,10 +31,10 @@
        become: true
        docker_users:
          - nick
-       docker_compose: true 
+       docker_compose: true
      - { role: gantsign.visual-studio-code, become: true }
      - role: gantsign.oh-my-zsh
-       become: true 
+       become: true
        users:
          - username: nick
        plugins:
@@ -143,5 +143,11 @@
       ansible.builtin.pip:
         name:
           - revChatGPT
-    - name: aiac
-      command: go install github.com/gofireflyio/aiac/v3@latest
+    - name: Install Go packages
+      command:
+        cmd: "go install {{ item.package }}@latest"
+      loop:
+        - { package: "github.com/gofireflyio/aiac/v3" }
+        - { package: "github.com/deepmap/oapi-codegen/cmd/oapi-codegen" }
+      loop_control:
+        label: "{{ item.package }}"
