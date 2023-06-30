@@ -113,14 +113,18 @@
         name: "nick"
         group: "docker"
         append: yes
-    - name: install bitwarden
+    - name: Install applications
       become: true
-      community.general.snap:
-        name: bitwarden
-    - name: install hugo
-      become: true
-      community.general.snap:
-        name: hugo
+      vars:
+        apps_to_install:
+          - bitwarden
+          - hugo
+          - spotify
+      tasks:
+        - name: Install applications using snap
+          community.general.snap:
+            name: "{{ item }}"
+          loop: "{{ apps_to_install }}"
     # onedrive client
     - name: onedrive gpg
       become: true
