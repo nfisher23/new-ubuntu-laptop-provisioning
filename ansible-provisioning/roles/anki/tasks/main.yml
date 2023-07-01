@@ -12,15 +12,14 @@
 - name: Download Anki tar file
   become: true
   ansible.builtin.get_url:
-    url: "https://apps.ankiweb.net/downloads/archive/{{ anki.tar_version}}.tar.bz2"
-    dest: /tmp/anki.tar.bz2
+    url: "https://apps.ankiweb.net/downloads/archive/{{ anki.tar_version}}.tar.zst"
+    dest: /tmp/anki.tar.zst
 
 - name: Extract tar file
   become: true
   unarchive:
-    src: /tmp/anki.tar.bz2
+    src: /tmp/anki.tar.zst
     dest: /tmp/anki
 
 - name: Change to extracted directory
-  become: true
-  shell: "cd /tmp/anki/{{ anki.tar_version }} && make install"
+  shell: "cd /tmp/anki/{{ anki.tar_version }} && ./install.sh"
