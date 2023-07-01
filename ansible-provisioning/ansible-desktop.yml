@@ -5,6 +5,7 @@
     # Common roles
     #  - { role: locales, become: true }
      - { role: common, become: true }
+     - { role: anki, become: true }
      - { role: zsh, become: true }
      - role: gantsign.golang
        become: true
@@ -64,17 +65,17 @@
   tasks:
     # dotfiles, zsh
     - name: copy git config
-      copy: 
+      copy:
         src: dotfiles/.gitconfig
         dest: /home/nick/.gitconfig
       delegate_to: localhost
     - name: copy zsh config
-      copy: 
+      copy:
         src: dotfiles/.zshrc
         dest: /home/nick/.zshrc
       delegate_to: localhost
     - name: copy tmux config
-      copy: 
+      copy:
         src: dotfiles/.tmux.conf
         dest: /home/nick/.tmux.conf
       delegate_to: localhost
@@ -104,7 +105,7 @@
       # docker
     - name: Create "docker" group
       become: true
-      group:  
+      group:
         name: "docker"
         state: present
     - name: Add remote "ubuntu" user to "docker" group
@@ -138,7 +139,7 @@
         name: onedrive
         install_recommends: false
     - name: copy onedrive sync list
-      copy: 
+      copy:
         src: dotfiles/onedrive_sync_list
         dest: /home/nick/.config/onedrive/sync_list
       delegate_to: localhost

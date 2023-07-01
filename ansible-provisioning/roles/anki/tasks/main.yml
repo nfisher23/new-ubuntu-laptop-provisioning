@@ -1,0 +1,26 @@
+---
+- name: Install required packages
+  ansible.builtin.apt:
+    name:
+      - libxcb-xinerama0
+      - libxcb-cursor0
+    state: present
+- name: Create directory
+  ansible.builtin.file:
+    path: /tmp/anki
+    state: directory
+- name: Download Anki tar file
+  become: true
+  ansible.builtin.get_url:
+    url: "https://apps.ankiweb.net/downloads/archive/{{ anki.tar_version}}.tar.bz2"
+    dest: /tmp/anki.tar.bz2
+
+- name: Extract tar file
+  become: true
+  unarchive:
+    src: /tmp/anki.tar.bz2
+    dest: /tmp/anki
+
+- name: Change to extracted directory
+  become: true
+  shell: "cd /tmp/anki/{{ anki.tar_version }} && make install"
