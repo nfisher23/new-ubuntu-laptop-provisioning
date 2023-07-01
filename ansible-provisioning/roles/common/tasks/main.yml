@@ -41,6 +41,7 @@
     - less
     - lftp
     - make
+    - mysql-client
     - nano
     - nfs-common
     - nmap
