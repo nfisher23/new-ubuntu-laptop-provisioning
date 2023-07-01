@@ -6,6 +6,7 @@
     #  - { role: locales, become: true }
      - { role: common, become: true }
      - { role: anki, become: true }
+     - { role: freedomofpress.signal-desktop, become: true }
      - { role: zsh, become: true }
      - role: gantsign.golang
        become: true
@@ -121,6 +122,7 @@
           - bitwarden
           - hugo
           - spotify
+          - slack
       tasks:
         - name: Install applications using snap
           community.general.snap:
