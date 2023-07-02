@@ -6,6 +6,7 @@
     #  - { role: locales, become: true }
      - { role: common, become: true }
      - { role: anki, become: true }
+     - { role: mullvad, become: true}
      - { role: freedomofpress.signal-desktop, become: true }
      - { role: zsh, become: true }
      - role: gantsign.golang

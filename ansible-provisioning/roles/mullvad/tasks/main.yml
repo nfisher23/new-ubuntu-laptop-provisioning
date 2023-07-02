@@ -1,0 +1,14 @@
+---
+
+- name: Download Mullvad VPN deb package
+  get_url:
+    url: https://mullvad.net/download/app/deb/latest
+    dest: /etc/MullvadVPN-latest_amd64.deb
+    mode: '0644'
+
+- name: Install Mullvad VPN
+  apt:
+    deb: /etc/MullvadVPN-latest_amd64.deb
+    state: present
+    update_cache: yes
+    force: yes
