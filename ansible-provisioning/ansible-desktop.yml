@@ -54,6 +54,7 @@
        commands:
         - "source-file": "'~/.tmux.conf'"
      - { role: python, become: true }
+     - { role: ai-cli-tools, become: true }
      - { role: ssh, become: true }
     # Desktop roles
      - { role: desktop, become: true }
@@ -147,10 +148,6 @@
         dest: /home/nick/.config/onedrive/sync_list
       delegate_to: localhost
     # ai tools
-    - name: chatgpt
-      ansible.builtin.pip:
-        name:
-          - revChatGPT
     - name: Install Go packages
       command:
         cmd: "go install {{ item.package }}@latest"

@@ -1,0 +1,6 @@
+---
+- name: ai-tools
+  ansible.builtin.pip:
+    name:
+      - revChatGPT
+      - openai
