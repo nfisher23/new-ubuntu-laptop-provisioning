@@ -154,5 +154,6 @@
       loop:
         - { package: "github.com/gofireflyio/aiac/v3" }
         - { package: "github.com/deepmap/oapi-codegen/cmd/oapi-codegen" }
+        - { package: "github.com/spf13/cobra-cli@latests" }
       loop_control:
         label: "{{ item.package }}"
