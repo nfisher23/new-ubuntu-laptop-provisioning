@@ -4,158 +4,161 @@
   roles:
     # Common roles
     #  - { role: locales, become: true }
-     - { role: common, become: true }
-     - { role: calibre, become: true }
-     - { role: anki, become: true }
-     - { role: gotmax23.zoom, become: true }
-     - { role: mullvad, become: true}
-     - { role: freedomofpress.signal-desktop, become: true }
-     - { role: zsh, become: true }
-     - role: gantsign.golang
+#     - { role: common, become: true }
+#     - { role: calibre, become: true }
+     - role:  geerlingguy.swap
        become: true
-       golang_install_dir: "/usr/local/go"
-    # - { role: dotfiles, become: true }
-     - { role: geerlingguy.java, become: true }
-     - role: gantsign.maven
-       become: true
-       maven_version: '3.3.9'
-       maven_is_default_installation: true
-       maven_fact_group_name: maven
-     - role: webarchitect609.jet_brains_toolbox
-       become: true
-       toolbox_install_for_user: "nick"
-       toolbox_install_dir: /usr/local/bin
-    #  - role: gantsign.intellij-plugins
-    #    users:
-    #      - username: nick
-    #        intellij_plugins:
-    #          - Go
-     - role: githubixx.kubectl
-       become: true
-     - role: haxorof.docker_ce
-       become: true
-       docker_users:
-         - nick
-       docker_compose: true
-     - { role: gantsign.visual-studio-code, become: true }
-     - role: gantsign.oh-my-zsh
-       become: true
-       users:
-         - username: nick
-       plugins:
-        - git
-        - zsh-autosuggestions
-        - zsh-syntax-highlighting
-        - zsh-z
-        - kubectl
-       update_mode: auto
-       write_zshrc: false
-     - role: 0x0I.tmux
-       become: true
-       comment: "stuff"
-       commands:
-        - "source-file": "'~/.tmux.conf'"
-     - { role: python, become: true }
-     - { role: ai-cli-tools, become: true }
-     - { role: ssh, become: true }
-    # Desktop roles
-     - { role: desktop, become: true }
-     # - { role: desktop-cleanup, become: true }
-     # - { role: desktop-autostart, become: true }
-     - { role: chromium, become: true }
-     - { role: dbeaver, become: true }
-     - { role: firefox, become: true }
-     - { role: gimp, become: true }
-     - { role: thunderbird, become: true }
-  tasks:
-    # dotfiles, zsh
-    - name: copy git config
-      copy:
-        src: dotfiles/.gitconfig
-        dest: /home/nick/.gitconfig
-      delegate_to: localhost
-    - name: copy zsh config
-      copy:
-        src: dotfiles/.zshrc
-        dest: /home/nick/.zshrc
-      delegate_to: localhost
-    - name: copy tmux config
-      copy:
-        src: dotfiles/.tmux.conf
-        dest: /home/nick/.tmux.conf
-      delegate_to: localhost
-    - name: add zsh plugins
-      ansible.builtin.git:
-        repo: https://github.com/zsh-users/zsh-autosuggestions
-        dest: /home/nick/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-    - name: Change file ownership, group and permissions
-      ansible.builtin.file:
-        path: /home/nick/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-        owner: nick
-        mode: '0755'
-    - name: add zsh plugin
-      ansible.builtin.git:
-        repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-        dest: /home/nick/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-    - name: Change file ownership, group and permissions
-      ansible.builtin.file:
-        path: /home/nick/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-        owner: nick
-        mode: '0755'
-    - name: Touch secrets
-      ansible.builtin.file:
-        path: /home/nick/.secrets
-        state: touch
-        mode: u=rw,g=r,o=r
-      # docker
-    - name: Create "docker" group
-      become: true
-      group:
-        name: "docker"
-        state: present
-    - name: Add remote "ubuntu" user to "docker" group
-      become: true
-      user:
-        name: "nick"
-        group: "docker"
-        append: yes
-    - name: Install applications
-      become: true
-      vars:
-        apps_to_install:
-          - bitwarden
-          - hugo
-          - spotify
-          - slack
-      tasks:
-        - name: Install applications using snap
-          community.general.snap:
-            name: "{{ item }}"
-          loop: "{{ apps_to_install }}"
-    # onedrive client
-    - name: onedrive gpg
-      become: true
-      shell: wget -qO - https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /usr/share/keyrings/obs-onedrive.gpg > /dev/null
-    - name: open suse build service repo
-      become: true
-      shell: echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/obs-onedrive.gpg] https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_22.04/ ./" | sudo tee /etc/apt/sources.list.d/onedrive.list
-    - name: install onedrive client
-      become: true
-      ansible.builtin.apt:
-        name: onedrive
-        install_recommends: false
-    - name: copy onedrive sync list
-      copy:
-        src: dotfiles/onedrive_sync_list
-        dest: /home/nick/.config/onedrive/sync_list
-      delegate_to: localhost
-    # ai tools
-    - name: Install Go packages
-      command:
-        cmd: "go install {{ item.package }}@latest"
-      loop:
-        - { package: "github.com/gofireflyio/aiac/v3" }
-        - { package: "github.com/deepmap/oapi-codegen/cmd/oapi-codegen" }
-        - { package: "github.com/spf13/cobra-cli@" }
-      loop_control:
-        label: "{{ item.package }}"
+       swap_file_size_mb: '8192'
+#     - { role: anki, become: true }
+#     - { role: gotmax23.zoom, become: true }
+#     - { role: mullvad, become: true}
+#     - { role: freedomofpress.signal-desktop, become: true }
+#     - { role: zsh, become: true }
+#     - role: gantsign.golang
+#       become: true
+#       golang_install_dir: "/usr/local/go"
+#    # - { role: dotfiles, become: true }
+#     - { role: geerlingguy.java, become: true }
+#     - role: gantsign.maven
+#       become: true
+#       maven_version: '3.3.9'
+#       maven_is_default_installation: true
+#       maven_fact_group_name: maven
+#     - role: webarchitect609.jet_brains_toolbox
+#       become: true
+#       toolbox_install_for_user: "nick"
+#       toolbox_install_dir: /usr/local/bin
+#    #  - role: gantsign.intellij-plugins
+#    #    users:
+#    #      - username: nick
+#    #        intellij_plugins:
+#    #          - Go
+#     - role: githubixx.kubectl
+#       become: true
+#     - role: haxorof.docker_ce
+#       become: true
+#       docker_users:
+#         - nick
+#       docker_compose: true
+#     - { role: gantsign.visual-studio-code, become: true }
+#     - role: gantsign.oh-my-zsh
+#       become: true
+#       users:
+#         - username: nick
+#       plugins:
+#        - git
+#        - zsh-autosuggestions
+#        - zsh-syntax-highlighting
+#        - zsh-z
+#        - kubectl
+#       update_mode: auto
+#       write_zshrc: false
+#     - role: 0x0I.tmux
+#       become: true
+#       comment: "stuff"
+#       commands:
+#        - "source-file": "'~/.tmux.conf'"
+#     - { role: python, become: true }
+#     - { role: ai-cli-tools, become: true }
+#     - { role: ssh, become: true }
+#    # Desktop roles
+#     - { role: desktop, become: true }
+#     # - { role: desktop-cleanup, become: true }
+#     # - { role: desktop-autostart, become: true }
+#     - { role: chromium, become: true }
+#     - { role: dbeaver, become: true }
+#     - { role: firefox, become: true }
+#     - { role: gimp, become: true }
+#     - { role: thunderbird, become: true }
+#  tasks:
+#    # dotfiles, zsh
+#    - name: copy git config
+#      copy:
+#        src: dotfiles/.gitconfig
+#        dest: /home/nick/.gitconfig
+#      delegate_to: localhost
+#    - name: copy zsh config
+#      copy:
+#        src: dotfiles/.zshrc
+#        dest: /home/nick/.zshrc
+#      delegate_to: localhost
+#    - name: copy tmux config
+#      copy:
+#        src: dotfiles/.tmux.conf
+#        dest: /home/nick/.tmux.conf
+#      delegate_to: localhost
+#    - name: add zsh plugins
+#      ansible.builtin.git:
+#        repo: https://github.com/zsh-users/zsh-autosuggestions
+#        dest: /home/nick/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+#    - name: Change file ownership, group and permissions
+#      ansible.builtin.file:
+#        path: /home/nick/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+#        owner: nick
+#        mode: '0755'
+#    - name: add zsh plugin
+#      ansible.builtin.git:
+#        repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+#        dest: /home/nick/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+#    - name: Change file ownership, group and permissions
+#      ansible.builtin.file:
+#        path: /home/nick/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+#        owner: nick
+#        mode: '0755'
+#    - name: Touch secrets
+#      ansible.builtin.file:
+#        path: /home/nick/.secrets
+#        state: touch
+#        mode: u=rw,g=r,o=r
+#      # docker
+#    - name: Create "docker" group
+#      become: true
+#      group:
+#        name: "docker"
+#        state: present
+#    - name: Add remote "ubuntu" user to "docker" group
+#      become: true
+#      user:
+#        name: "nick"
+#        group: "docker"
+#        append: yes
+#    - name: Install applications
+#      become: true
+#      vars:
+#        apps_to_install:
+#          - bitwarden
+#          - hugo
+#          - spotify
+#          - slack
+#      tasks:
+#        - name: Install applications using snap
+#          community.general.snap:
+#            name: "{{ item }}"
+#          loop: "{{ apps_to_install }}"
+#    # onedrive client
+#    - name: onedrive gpg
+#      become: true
+#      shell: wget -qO - https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /usr/share/keyrings/obs-onedrive.gpg > /dev/null
+#    - name: open suse build service repo
+#      become: true
+#      shell: echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/obs-onedrive.gpg] https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_22.04/ ./" | sudo tee /etc/apt/sources.list.d/onedrive.list
+#    - name: install onedrive client
+#      become: true
+#      ansible.builtin.apt:
+#        name: onedrive
+#        install_recommends: false
+#    - name: copy onedrive sync list
+#      copy:
+#        src: dotfiles/onedrive_sync_list
+#        dest: /home/nick/.config/onedrive/sync_list
+#      delegate_to: localhost
+#    # ai tools
+#    - name: Install Go packages
+#      command:
+#        cmd: "go install {{ item.package }}@latest"
+#      loop:
+#        - { package: "github.com/gofireflyio/aiac/v3" }
+#        - { package: "github.com/deepmap/oapi-codegen/cmd/oapi-codegen" }
+#        - { package: "github.com/spf13/cobra-cli@" }
+#      loop_control:
+#        label: "{{ item.package }}"
