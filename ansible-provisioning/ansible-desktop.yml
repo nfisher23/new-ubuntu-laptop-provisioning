@@ -9,6 +9,7 @@
      - role:  geerlingguy.swap
        become: true
        swap_file_size_mb: '8192'
+       swap_file_path: /swapfile2
      - { role: anki, become: true }
      - { role: gotmax23.zoom, become: true }
      - { role: mullvad, become: true}
