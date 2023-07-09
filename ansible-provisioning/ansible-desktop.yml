@@ -5,6 +5,7 @@
     # Common roles
     #  - { role: locales, become: true }
      - { role: common, become: true }
+     - { role: calibre, become: true }
      - { role: anki, become: true }
      - { role: gotmax23.zoom, become: true }
      - { role: mullvad, become: true}

@@ -1,0 +1,7 @@
+---
+- name: Install Calibre eBook
+  become: true
+  ansible.builtin.shell: >
+    wget --no-check-certificate -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+  args:
+    creates: /usr/bin/calibre
