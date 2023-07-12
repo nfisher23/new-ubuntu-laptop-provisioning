@@ -153,13 +153,14 @@
         src: dotfiles/onedrive_sync_list
         dest: /home/nick/.config/onedrive/sync_list
       delegate_to: localhost
-    # ai tools
+    # dev tools
     - name: Install Go packages
       command:
         cmd: "go install {{ item.package }}@latest"
       loop:
         - { package: "github.com/gofireflyio/aiac/v3" }
         - { package: "github.com/deepmap/oapi-codegen/cmd/oapi-codegen" }
-        - { package: "github.com/spf13/cobra-cli@" }
+        - { package: "github.com/spf13/cobra-cli" }
+        - { package: "github.com/danielgtaylor/restish" }
       loop_control:
         label: "{{ item.package }}"
