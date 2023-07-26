@@ -38,6 +38,7 @@
     - iftop
     - imagemagick
     - iotop
+    - jq
     - less
     - lftp
     - make
