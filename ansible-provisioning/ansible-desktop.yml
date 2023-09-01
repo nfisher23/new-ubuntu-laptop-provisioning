@@ -163,5 +163,6 @@
         - { package: "github.com/deepmap/oapi-codegen/cmd/oapi-codegen" }
         - { package: "github.com/spf13/cobra-cli" }
         - { package: "github.com/danielgtaylor/restish" }
+        - { package: "golang.org/x/tools/cmd/godoc@latest" }
       loop_control:
         label: "{{ item.package }}"
