@@ -19,6 +19,9 @@
     - { role: gotmax23.zoom, become: true }
     - { role: mullvad, become: true }
     - { role: freedomofpress.signal-desktop, become: true }
+    - role: ymajik.wireshark
+      become: true
+      wireshark_gui: true
     - { role: zsh, become: true }
     - role: gantsign.golang
       become: true
