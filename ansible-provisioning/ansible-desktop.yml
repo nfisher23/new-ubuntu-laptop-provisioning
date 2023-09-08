@@ -18,6 +18,7 @@
     - { role: anki, become: true }
     - { role: gotmax23.zoom, become: true }
     - { role: mullvad, become: true }
+    - { role: diodonfrost.terraform, become: true }
     - { role: freedomofpress.signal-desktop, become: true }
     - role: ymajik.wireshark
       become: true
