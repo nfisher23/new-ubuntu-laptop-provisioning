@@ -27,6 +27,7 @@
     - role: gantsign.golang
       become: true
       golang_install_dir: "/usr/local/go"
+    - { role: gantsign.helm, become: true }
     # - { role: dotfiles, become: true }
     - { role: geerlingguy.java, become: true }
     - role: gantsign.maven
