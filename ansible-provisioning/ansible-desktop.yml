@@ -133,15 +133,17 @@
         name: "nick"
         group: "docker"
         append: yes
+    - name: Install helm secrets plugins
+      shell: wget -qO - "https://github.com/jkroepke/helm-secrets/releases/latest/download/helm-secrets.tar.gz" | tar -C "$(helm env HELM_PLUGINS)" -xzf-
     - name: Install applications
       become: true
       community.general.snap:
-        name: "{{ item }}"
+        name: "{{ item.val }}"
       loop:
-        - { 'bitwarden' }
-        - { 'hugo' }
-        - { 'spotify' }
-        - { 'slack' }
+        - { val: 'bitwarden' }
+        - { val: 'hugo' }
+        - { val: 'spotify' }
+        - { val: 'slack' }
     # onedrive client
     - name: onedrive gpg
       become: true
