@@ -133,12 +133,25 @@
         name: "nick"
         group: "docker"
         append: yes
+    - name: install helmfile
+      become: true
+      shell: |
+        wget https://github.com/helmfile/helmfile/releases/download/v0.156.0/helmfile_0.156.0_linux_amd64.tar.gz
+        mkdir helmfile
+        tar -xvf helmfile_0.156.0_linux_amd64.tar.gz -C helmfile
+        mv helmfile/helmfile /usr/local/bin/helmfile
+        chmod +x /usr/local/bin/helmfile
+        rm -rf helmfile
     - name: install sops
       become: true
       shell: |
-        curl -LO https://github.com/getsops/sops/releases/download/v3.8.0-rc.1/sops-v3.8.0-rc.1.linux.amd64
-        mv sops-v3.8.0-rc.1.linux.amd64 /usr/local/bin/sops
-        chmod +x /usr/local/bin/sops
+        curl -LO {{ item.url }}
+        mv {{ item.binary }} {{ item.dest}}
+        chmod +x {{ item.dest }}
+      loop:
+        - url: https://github.com/getsops/sops/releases/download/v3.8.0-rc.1/sops-v3.8.0-rc.1.linux.amd64
+          binary: sops-v3.8.0-rc.1.linux.amd64
+          dest: /usr/local/bin/sops
     - name: Install helm secrets plugins
       shell: wget -qO - "https://github.com/jkroepke/helm-secrets/releases/latest/download/helm-secrets.tar.gz" | tar -C "$(helm env HELM_PLUGINS)" -xzf-
     - name: Install applications
