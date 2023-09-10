@@ -137,7 +137,7 @@
       shell: wget -qO - "{{ item.url}}" | tar -C "$(helm env HELM_PLUGINS)" -xzf-
       loop:
         - url: https://github.com/jkroepke/helm-secrets/releases/latest/download/helm-secrets.tar.gz
-        - url: https://github.com/databus23/helm-diff/releases/download/v3.8.1/helm-diff-linux-arm64.tgz
+        - url: https://github.com/databus23/helm-diff/releases/latest/download/helm-diff-linux-amd64.tgz
     - name: install helmfile
       become: true
       shell: |
