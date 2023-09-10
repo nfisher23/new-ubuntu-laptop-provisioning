@@ -133,6 +133,11 @@
         name: "nick"
         group: "docker"
         append: yes
+    - name: Install helm plugins
+      shell: wget -qO - "{{ item.url}}" | tar -C "$(helm env HELM_PLUGINS)" -xzf-
+      loop:
+        - url: https://github.com/jkroepke/helm-secrets/releases/latest/download/helm-secrets.tar.gz
+        - url: https://github.com/databus23/helm-diff/releases/download/v3.8.1/helm-diff-linux-arm64.tgz
     - name: install helmfile
       become: true
       shell: |
@@ -152,8 +157,6 @@
         - url: https://github.com/getsops/sops/releases/download/v3.8.0-rc.1/sops-v3.8.0-rc.1.linux.amd64
           binary: sops-v3.8.0-rc.1.linux.amd64
           dest: /usr/local/bin/sops
-    - name: Install helm secrets plugins
-      shell: wget -qO - "https://github.com/jkroepke/helm-secrets/releases/latest/download/helm-secrets.tar.gz" | tar -C "$(helm env HELM_PLUGINS)" -xzf-
     - name: Install applications
       become: true
       community.general.snap:
