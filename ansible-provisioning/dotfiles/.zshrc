@@ -124,6 +124,11 @@ alias d="docker"
 alias python="python3"
 alias chatgpt="python3 -m revChatGPT.V3 --api_key $OPENAI_API_KEY --model gpt-3.5-turbo-16k"
 
+get_digitalocean_monthly_spend() {
+  doctl invoice get $(doctl invoice list -o json | jq -r ".invoice_preview.invoice_uuid") -o json | jq -r ".invoice_items[].amount" | awk '{sum += $1} END {print sum}'
+}
+
+
 source <(kubectl completion zsh)
 
 # natural pasting
