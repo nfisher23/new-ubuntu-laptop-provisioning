@@ -1,0 +1,22 @@
+---
+
+- name: Define zsh plugins
+  set_fact:
+    zsh_plugins:
+      - name: zsh-autosuggestions
+        repo: https://github.com/zsh-users/zsh-autosuggestions
+      - name: zsh-syntax-highlighting
+        repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+
+- name: Clone zsh plugins
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "/home/nick/.oh-my-zsh/custom/plugins/{{ item.name }}"
+  loop: "{{ zsh_plugins }}"
+
+- name: Change file ownership, group, and permissions
+  ansible.builtin.file:
+    path: "/home/nick/.oh-my-zsh/custom/plugins/{{ item.name }}"
+    owner: nick
+    mode: '0755'
+  loop: "{{ zsh_plugins }}"

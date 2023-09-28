@@ -34,6 +34,7 @@
     - git
     - grep
     - gzip
+    - hub
     - htop
     - httping
     - iftop
