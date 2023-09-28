@@ -128,6 +128,7 @@ get_digitalocean_monthly_spend() {
   doctl invoice get $(doctl invoice list -o json | jq -r ".invoice_preview.invoice_uuid") -o json | jq -r ".invoice_items[].amount" | awk '{sum += $1} END {print sum}'
 }
 
+export GITHUB_USER=nfisher23
 
 source <(kubectl completion zsh)
 
