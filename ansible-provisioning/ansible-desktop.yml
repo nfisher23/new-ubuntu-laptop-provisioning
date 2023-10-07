@@ -31,6 +31,9 @@
     - { role: gantsign.helm, become: true }
     # - { role: dotfiles, become: true }
     - { role: geerlingguy.java, become: true }
+    - role: tmiller02.geckodriver
+      become: true
+      geckodriver_version: "0.33.0"
     - role: gantsign.maven
       become: true
       maven_version: '3.3.9'
