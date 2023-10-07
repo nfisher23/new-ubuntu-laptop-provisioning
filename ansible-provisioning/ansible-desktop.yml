@@ -71,7 +71,7 @@
       commands:
         - "source-file": "'~/.tmux.conf'"
     - { role: python, become: true }
-    - { role: ai-cli-tools, become: true }
+    - { role: python-tools, become: true }
     - { role: ssh, become: true }
     # Desktop roles
     - { role: desktop, become: true }
