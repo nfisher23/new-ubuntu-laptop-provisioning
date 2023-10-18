@@ -180,5 +180,6 @@
         - { package: "github.com/danielgtaylor/restish" }
         - { package: "golang.org/x/tools/cmd/godoc@latest" }
         - { package: "github.com/digitalocean/doctl/cmd/doctl@latest" }
+        - { package: "github.com/nats-io/natscli/nats@latest" }
       loop_control:
         label: "{{ item.package }}"
