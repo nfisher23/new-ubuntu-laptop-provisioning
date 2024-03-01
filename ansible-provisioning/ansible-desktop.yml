@@ -133,6 +133,13 @@
         mv helmfile/helmfile /usr/local/bin/helmfile
         chmod +x /usr/local/bin/helmfile
         rm -rf helmfile
+    - name: install jwt-cli
+      become: true
+      shell: |
+        wget https://github.com/mike-engel/jwt-cli/releases/download/6.0.0/jwt-linux.tar.gz
+        tar -xvf jwt-linux.tar.gz
+        rm jwt-linux.tar.gz
+        mv jwt /usr/local/bin/jwt
     - name: install sops
       become: true
       shell: |
