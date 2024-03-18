@@ -3,7 +3,7 @@
   hosts: localhost
   roles:
     # Common roles
-    #  - { role: locales, become: true }
+     - { role: locales, become: true }
     - { role: zsh-plugins, become: true }
     - { role: common, become: true }
     - { role: calibre, become: true }
@@ -27,7 +27,8 @@
     - { role: zsh, become: true }
     - role: gantsign.golang
       become: true
-      golang_install_dir: "/usr/local/go"
+      golang_install_dir: "/usr/local/go"    
+      golang_version: '1.22.0'
     - { role: gantsign.helm, become: true }
     # - { role: dotfiles, become: true }
     - { role: geerlingguy.java, become: true }
