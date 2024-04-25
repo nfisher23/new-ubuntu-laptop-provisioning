@@ -6,6 +6,14 @@
     depth: 1
 - name: install awesome vimrc
   shell: sh /home/nick/.vim_runtime/install_awesome_vimrc.sh
+- name: Create vim config dir if it doesn't exist
+  file:
+    path: /home/nick/.vim
+    state: directory
+- name: Create vimrc file if it doesn't exist
+  file:
+    path: /home/nick/.vim/vimrc
+    state: touch
 - name: Create directory if it doesn't exist
   file:
     path: /home/nick/.config/nvim

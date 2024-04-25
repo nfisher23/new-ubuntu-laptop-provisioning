@@ -88,13 +88,6 @@
     - { role: gimp, become: true }
     - { role: thunderbird, become: true }
   tasks:
-    - name: clone vimrc repository
-      git:
-        repo: https://github.com/amix/vimrc.git
-        dest: ~/.vim_runtime
-        depth: 1
-    - name: install awesome vimrc
-      shell: sh ~/.vim_runtime/install_awesome_vimrc.sh
     # dotfiles, zsh 
     - name: copy git config
       copy:
