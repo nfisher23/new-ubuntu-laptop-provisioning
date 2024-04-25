@@ -141,3 +141,8 @@ stty -ixon
 
 #eval "$(ssh-agent -s)"
 #ssh-add ~/.ssh/id_ed25519
+
+# neovim stuff
+export VIMCONFIG=~/.config/nvim
+export VIMDATA=~/.local/share/nvim
+
