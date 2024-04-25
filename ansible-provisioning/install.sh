@@ -19,7 +19,8 @@ else
 fi
 
 # auto install all galaxy roles, assuming a dot
-ansible-galaxy install --force $(cat ansible-desktop.yml| yq -r ".[].roles[] | .role" | grep '\.')
+# ansible-galaxy install --force $(cat ansible-desktop.yml| yq -r ".[].roles[] | .role" | grep '\.')
+ansible-galaxy install  $(cat ansible-desktop.yml| yq -r ".[].roles[] | .role" | grep '\.')
 
 #####################################
 # Display real installation process #

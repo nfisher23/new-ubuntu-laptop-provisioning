@@ -3,7 +3,7 @@
   hosts: localhost
   roles:
     # Common roles
-     - { role: locales, become: true }
+    - { role: locales, become: true }
     - { role: zsh-plugins, become: true }
     - { role: common, become: true }
     - { role: calibre, become: true }
@@ -87,7 +87,14 @@
     - { role: gimp, become: true }
     - { role: thunderbird, become: true }
   tasks:
-    # dotfiles, zsh
+    - name: clone vimrc repository
+      git:
+        repo: https://github.com/amix/vimrc.git
+        dest: ~/.vim_runtime
+        depth: 1
+    - name: install awesome vimrc
+      shell: sh ~/.vim_runtime/install_awesome_vimrc.sh
+    # dotfiles, zsh 
     - name: copy git config
       copy:
         src: dotfiles/.gitconfig
