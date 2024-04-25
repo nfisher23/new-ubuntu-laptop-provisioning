@@ -1,0 +1,19 @@
+---
+- name: clone vimrc repository
+  git:
+    repo: https://github.com/amix/vimrc.git
+    dest: /home/nick/.vim_runtime
+    depth: 1
+- name: install awesome vimrc
+  shell: sh /home/nick/.vim_runtime/install_awesome_vimrc.sh
+- name: Create directory if it doesn't exist
+  file:
+    path: /home/nick/.config/nvim
+    state: directory
+- name: Create init.vim file for Neovim
+  copy:
+    content: |
+      set runtimepath^=/home/nick/.vim runtimepath+=/home/nick/.vim/after
+      let &packpath = &runtimepath
+      source /home/nick/.vim/vimrc
+    dest: /home/nick/.config/nvim/init.vim
