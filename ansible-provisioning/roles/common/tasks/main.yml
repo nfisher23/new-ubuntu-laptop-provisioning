@@ -46,7 +46,6 @@
     - make
     - mysql-client
     - nano
-    - neovim
     - nfs-common
     - nmap
     - openssl
