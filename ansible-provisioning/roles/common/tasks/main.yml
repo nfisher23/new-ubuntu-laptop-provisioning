@@ -42,6 +42,7 @@
     - iotop
     - jq
     - less
+    - libxml2-utils
     - lftp
     - make
     - mysql-client
