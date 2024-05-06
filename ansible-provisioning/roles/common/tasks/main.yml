@@ -29,6 +29,7 @@
     - dos2unix
     - fdupes
     - ftp-ssl
+    - fd-find
     - gawk
     - gcc
     - git

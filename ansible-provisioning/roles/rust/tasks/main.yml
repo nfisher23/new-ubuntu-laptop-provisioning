@@ -4,3 +4,8 @@
 - name: install treesitter
   shell: cargo install tree-sitter-cli
   become_user: nick
+
+- name: install ripgrep
+  shell: cargo install ripgrep
+  become_user: nick
+
