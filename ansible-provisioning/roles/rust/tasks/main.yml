@@ -1,2 +1,6 @@
-- name: Run curl command with script
+- name: Run rust installation script
   shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
+
+- name: install treesitter
+  shell: cargo install tree-sitter-cli
+  become_user: nick
