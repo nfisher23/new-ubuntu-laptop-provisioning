@@ -5,10 +5,10 @@
     # Common roles
     - { role: rust, become: true }
     - { role: lazygit, become: true }
+    - { role: nvim, become: true }
     - { role: locales, become: true }
     - { role: zsh-plugins, become: true }
     - { role: common, become: true }
-    - { role: nvim-config, become: true }
     - { role: calibre, become: true }
     - role: geerlingguy.swap
       become: true
