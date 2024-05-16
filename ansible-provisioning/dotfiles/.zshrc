@@ -115,6 +115,7 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:/home/nick/Downloads/apache-maven-3.8.6/bin"
 export PATH="$PATH:/home/nick/go/bin"
 export PATH="$PATH:/home/nick/.local/share/JetBrains/Toolbox/scripts"
+export PATH="$PATH:/home/nick/.local/bin"
 
 # turn off tilde pasting
 printf "\e[?2004l"

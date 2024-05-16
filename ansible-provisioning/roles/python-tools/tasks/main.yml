@@ -5,3 +5,4 @@
       - revChatGPT
       - openai
       - virtualenv
+      - gpt-command-line
