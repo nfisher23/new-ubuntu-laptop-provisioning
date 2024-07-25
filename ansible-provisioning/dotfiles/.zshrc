@@ -123,7 +123,8 @@ printf "\e[?2004l"
 alias dc="docker-compose"
 alias d="docker"
 alias python="python3"
-alias chatgpt="python3 -m revChatGPT.V3 --api_key $OPENAI_API_KEY --model gpt-3.5-turbo-16k"
+alias chatgptdev="gpt --model="gpt-4o" dev"
+alias chatgptgen="gpt --model="gpt-4o" general"
 
 gplocal() {
   git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D

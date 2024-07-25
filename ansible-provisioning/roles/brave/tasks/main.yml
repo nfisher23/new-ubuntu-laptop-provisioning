@@ -1,0 +1,31 @@
+---
+
+- name: Install curl
+  apt:
+    name: curl
+    state: present
+    update_cache: true
+  ignore_errors: true
+
+- name: Download Brave browser GPG key
+  get_url:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    dest: /usr/share/keyrings/brave-browser-archive-keyring.gpg
+    mode: '0644'
+
+- name: Add Brave browser APT repository
+  apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"
+    filename: brave-browser-release
+    update_cache: false
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+  ignore_errors: true
+
+- name: Install Brave browser
+  apt:
+    name: brave-browser
+    state: present
+

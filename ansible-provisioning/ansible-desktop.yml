@@ -2,7 +2,7 @@
 - name: Ubuntu desktop environment playbook
   hosts: localhost
   roles:
-    # Common roles
+    - { role: brave, become: true }
     - { role: rust, become: true }
     - { role: lazygit, become: true }
     - { role: nvim, become: true }
@@ -12,7 +12,7 @@
     - { role: calibre, become: true }
     - role: geerlingguy.swap
       become: true
-      swap_file_size_mb: '8192'
+      swap_file_size_mb: "8192"
       swap_file_path: /swapfile2
     - role: geerlingguy.nodejs
       become: true
@@ -30,8 +30,8 @@
     - { role: zsh, become: true }
     - role: gantsign.golang
       become: true
-      golang_install_dir: "/usr/local/go"    
-      golang_version: '1.22.0'
+      golang_install_dir: "/usr/local/go"
+      golang_version: "1.22.0"
     - { role: gantsign.helm, become: true }
     # - { role: dotfiles, become: true }
     - { role: geerlingguy.java, become: true }
@@ -40,7 +40,7 @@
       geckodriver_version: "0.33.0"
     - role: gantsign.maven
       become: true
-      maven_version: '3.3.9'
+      maven_version: "3.3.9"
       maven_is_default_installation: true
       maven_fact_group_name: maven
     - role: webarchitect609.jet_brains_toolbox
@@ -90,7 +90,7 @@
     - { role: gimp, become: true }
     - { role: thunderbird, become: true }
   tasks:
-    # dotfiles, zsh 
+    # dotfiles, zsh
     - name: copy git config
       copy:
         src: dotfiles/.gitconfig
@@ -159,10 +159,10 @@
       community.general.snap:
         name: "{{ item.val }}"
       loop:
-        - { val: 'bitwarden' }
-        - { val: 'hugo' }
-        - { val: 'spotify' }
-        - { val: 'slack' }
+        - { val: "bitwarden" }
+        - { val: "hugo" }
+        - { val: "spotify" }
+        - { val: "slack" }
     # onedrive client
     - name: onedrive gpg
       become: true
