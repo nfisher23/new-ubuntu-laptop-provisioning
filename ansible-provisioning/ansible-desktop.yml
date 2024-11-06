@@ -180,6 +180,22 @@
         src: dotfiles/onedrive_sync_list
         dest: /home/nick/.config/onedrive/sync_list
       delegate_to: localhost
+    # gh cli--note, this is untested
+    - name: Add GitHub CLI GPG key
+      ansible.builtin.apt_key:
+        url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+        state: present
+    - name: Add GitHub CLI repository
+      ansible.builtin.apt_repository:
+        repo: "deb [arch={{ ansible_architecture }} signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+        state: present
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+    - name: Install gh
+      ansible.builtin.apt:
+        name: gh
+        state: present
     # dev tools
     - name: Install Go packages
       command:
