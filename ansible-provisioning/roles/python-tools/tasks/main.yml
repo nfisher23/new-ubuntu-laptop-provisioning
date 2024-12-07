@@ -6,3 +6,4 @@
       - openai
       - virtualenv
       - gpt-command-line
+      - aider-chat
