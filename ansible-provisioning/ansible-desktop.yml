@@ -210,3 +210,28 @@
         - { package: "github.com/nats-io/natscli/nats@latest" }
       loop_control:
         label: "{{ item.package }}"
+
+      # all of this is untested
+    - name: Download and install NVM
+      shell: |
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+    - name: Install Node.js LTS version
+      shell: |
+        source $HOME/.nvm/nvm.sh
+        nvm install --lts
+        nvm use --lts
+        nvm alias default lts/*
+
+    - name: Ensure npm is up to date
+      shell: |
+        source $HOME/.nvm/nvm.sh
+        npm install -g npm
+
+    - name: Install @anthropic-ai/claude-code package
+      shell: |
+        source $HOME/.nvm/nvm.sh
+        npx @anthropic-ai/claude-code
