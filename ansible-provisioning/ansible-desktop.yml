@@ -231,7 +231,9 @@
         source $HOME/.nvm/nvm.sh
         npm install -g npm
 
-    - name: Install @anthropic-ai/claude-code package
+    - name: Install npx packages
       shell: |
         source $HOME/.nvm/nvm.sh
         npx @anthropic-ai/claude-code
+        npm install -g @google/gemini-cli
+        
