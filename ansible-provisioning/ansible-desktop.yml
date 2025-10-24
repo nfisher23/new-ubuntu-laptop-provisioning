@@ -12,7 +12,7 @@
     - { role: calibre, become: true }
     - role: geerlingguy.swap
       become: true
-      swap_file_size_mb: "8192"
+      swap_file_size_mb: "16384"
       swap_file_path: /swapfile2
     - role: geerlingguy.nodejs
       become: true
