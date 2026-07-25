@@ -90,6 +90,7 @@
     - { role: gimp, become: true }
     - { role: thunderbird, become: true }
     - { role: antigravity-cli }
+    - { role: ripgrep, become: true }
   tasks:
     # dotfiles, zsh
     - name: copy git config
@@ -197,6 +198,11 @@
       ansible.builtin.apt:
         name: gh
         state: present
+    - name: Install alacritty
+      become: true
+      ansible.builtin.apt:
+        name: alacritty
+        state: present
     # dev tools
     - name: Install Go packages
       command:
@@ -209,6 +215,24 @@
         - { package: "golang.org/x/tools/cmd/godoc@latest" }
         - { package: "github.com/digitalocean/doctl/cmd/doctl@latest" }
         - { package: "github.com/nats-io/natscli/nats@latest" }
+        - { package: "golang.org/x/tools/gopls@latest" }
+        - { package: "github.com/golangci/golangci-lint/cmd/golangci-lint@latest" }
+        - { package: "golang.org/x/tools/cmd/goimports@latest" }
+        - { package: "gotest.tools/gotestsum@latest" }
+        - { package: "github.com/go-delve/delve/cmd/dlv@latest" }
+        - { package: "github.com/vektra/mockery/v3@latest" }
+        - { package: "github.com/google/wire/cmd/wire@latest" }
+        - { package: "github.com/golang-migrate/migrate/v4/cmd/migrate@latest" }
+        - { package: "github.com/go-jet/jet/v2/cmd/jet@latest" }
+        - { package: "github.com/vburenin/ifacemaker@latest" }
+        - { package: "github.com/dmarkham/enumer@latest" }
+        - { package: "github.com/sipin/gorazor@latest" }
+        - { package: "github.com/grafana/beyla/cmd/beyla@latest" }
+        - { package: "github.com/nfisher23/ai-template-manager/cmd/ai-template-manager@latest" }
+        - { package: "github.com/kisielk/errcheck@latest" }
+        - { package: "github.com/jmattheis/goverter/cmd/goverter@latest" }
+        - { package: "github.com/rjeczalik/interfaces/cmd/interfacer@latest" }
+        - { package: "honnef.co/go/tools/cmd/staticcheck@latest" }
       loop_control:
         label: "{{ item.package }}"
 
@@ -237,4 +261,5 @@
         source $HOME/.nvm/nvm.sh
         npx @anthropic-ai/claude-code
         npm install -g @google/gemini-cli
+        npm install -g pnpm
         
