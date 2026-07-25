@@ -89,6 +89,7 @@
     - { role: firefox, become: true }
     - { role: gimp, become: true }
     - { role: thunderbird, become: true }
+    - { role: antigravity-cli }
   tasks:
     # dotfiles, zsh
     - name: copy git config

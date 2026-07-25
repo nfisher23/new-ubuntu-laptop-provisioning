@@ -1,0 +1,3 @@
+---
+- name: Download and install Antigravity CLI
+  shell: curl -fsSL https://antigravity.google/cli/install.sh | bash
