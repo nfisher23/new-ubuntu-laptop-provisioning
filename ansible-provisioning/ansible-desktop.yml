@@ -203,6 +203,14 @@
       ansible.builtin.apt:
         name: alacritty
         state: present
+    - name: Download Google Chrome
+      get_url:
+        url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        dest: /tmp/google-chrome-stable_current_amd64.deb
+    - name: Install Google Chrome
+      become: true
+      ansible.builtin.apt:
+        deb: /tmp/google-chrome-stable_current_amd64.deb
     # dev tools
     - name: Install Go packages
       command:
