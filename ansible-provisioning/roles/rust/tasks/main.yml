@@ -1,11 +1,30 @@
+- name: Install C/Clang build dependencies for Cargo
+  apt:
+    name:
+      - build-essential
+      - libclang-dev
+      - clang
+      - pkg-config
+    state: present
+
 - name: Run rust installation script
   shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
+  become_user: nick
+  args:
+    creates: /home/nick/.cargo/bin/cargo
 
 - name: Install packages using cargo
-  shell: cargo install {{ item }}
+  shell: /home/nick/.cargo/bin/cargo install {{ item.name }}
   become_user: nick
+  args:
+    creates: "/home/nick/.cargo/bin/{{ item.binary }}"
+  environment:
+    PATH: "/home/nick/.cargo/bin:{{ ansible_env.PATH }}"
   loop:
-    - tree-sitter-cli
-    - ripgrep
-    - aichat
+    - { name: 'tree-sitter-cli', binary: 'tree-sitter' }
+    - { name: 'ripgrep', binary: 'rg' }
+    - { name: 'aichat', binary: 'aichat' }
+
+
+
 

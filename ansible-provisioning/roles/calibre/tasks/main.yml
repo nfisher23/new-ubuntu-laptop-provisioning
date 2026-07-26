@@ -1,7 +1,17 @@
 ---
+- name: Install Calibre system dependencies
+  ansible.builtin.apt:
+    name:
+      - libopengl0
+      - libegl1
+      - libgl1
+      - xdg-utils
+    state: present
+
 - name: Install Calibre eBook
   become: true
   ansible.builtin.shell: >
-    wget --no-check-certificate -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+    wget --no-check-certificate -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin
   args:
     creates: /usr/bin/calibre
+
