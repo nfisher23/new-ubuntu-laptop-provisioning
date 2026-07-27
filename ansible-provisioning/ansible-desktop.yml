@@ -7,7 +7,6 @@
     - { role: lazygit, become: true }
     - { role: nvim, become: true }
     - { role: locales, become: true }
-    - { role: zsh-plugins, become: true }
     - { role: common, become: true }
     - { role: calibre, become: true }
     - role: geerlingguy.swap
@@ -69,6 +68,7 @@
         - kubectl
       update_mode: auto
       write_zshrc: false
+    - { role: zsh-plugins, become: true }
     - role: 0x0I.tmux
       become: true
       comment: "stuff"
@@ -221,6 +221,28 @@
       ansible.builtin.apt:
         name: alacritty
         state: present
+    - name: Set alacritty as default x-terminal-emulator
+      become: true
+      community.general.alternatives:
+        name: x-terminal-emulator
+        path: /usr/bin/alacritty
+    - name: Ensure ~/.config directory exists
+      ansible.builtin.file:
+        path: /home/nick/.config
+        state: directory
+        owner: nick
+        group: nick
+        mode: '0755'
+    - name: Configure xdg-terminal-exec default terminal to Alacritty
+      ansible.builtin.copy:
+        dest: "/home/nick/.config/{{ item }}"
+        content: "Alacritty.desktop\n"
+        owner: nick
+        group: nick
+        mode: '0644'
+      loop:
+        - xdg-terminals.list
+        - ubuntu-xdg-terminals.list
     - name: Download Google Chrome
       get_url:
         url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb

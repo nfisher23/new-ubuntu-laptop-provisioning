@@ -13,10 +13,15 @@
     repo: "{{ item.repo }}"
     dest: "/home/nick/.oh-my-zsh/custom/plugins/{{ item.name }}"
   loop: "{{ zsh_plugins }}"
+  become: yes
+  become_user: nick
 
 - name: Change file ownership, group, and permissions
   ansible.builtin.file:
     path: "/home/nick/.oh-my-zsh/custom/plugins/{{ item.name }}"
     owner: nick
+    group: nick
     mode: '0755'
+    recurse: yes
   loop: "{{ zsh_plugins }}"
+
