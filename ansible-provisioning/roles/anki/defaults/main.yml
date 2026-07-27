@@ -1,5 +1,4 @@
 ---
-
 anki:
-  tar_version: anki-2.1.65-linux-qt6
-
+  version: "2.1.65"
+  tar_version: "anki-2.1.65-linux-qt6"
