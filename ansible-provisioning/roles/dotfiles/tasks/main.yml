@@ -10,10 +10,14 @@
     - fortune
 
 - name: Install dotfiles dependencies with Python PIP
-  pip: name={{ item }} state=latest
+  pip:
+    name: "{{ item }}"
+    state: latest
+    extra_args: --break-system-packages
   with_items:
     - httpie
     - Pygments
+
 
 - name: Create public dotfiles directory
   file: path="{{ ansible_env.HOME }}/{{ dotfiles.path }}/public" state=directory

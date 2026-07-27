@@ -7,3 +7,5 @@
       - virtualenv
       - gpt-command-line
       - aider-chat
+    extra_args: --break-system-packages
+

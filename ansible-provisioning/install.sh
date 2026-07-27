@@ -24,4 +24,5 @@ ansible-galaxy install  $(cat ansible-desktop.yml| yq -r ".[].roles[] | .role" |
 
 #####################################
 # Display real installation process #
-ansible-playbook --ask-become-pass -i hosts ansible-desktop.yml
+ansible-playbook -i hosts ansible-desktop.yml
+
