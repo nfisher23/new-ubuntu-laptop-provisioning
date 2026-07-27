@@ -116,14 +116,22 @@
       group:
         name: "docker"
         state: present
-    - name: Add remote "ubuntu" user to "docker" group
+    - name: Add user to "docker" group
       become: true
       user:
         name: "nick"
-        group: "docker"
+        groups: "docker"
         append: yes
+
+    - name: Ensure helm plugins directory exists
+      ansible.builtin.file:
+        path: "/home/nick/.local/share/helm/plugins"
+        state: directory
+        mode: '0755'
+
     - name: Install helm plugins
       shell: wget -qO - "{{ item.url}}" | tar -C "$(helm env HELM_PLUGINS)" -xzf-
+
       loop:
         - url: https://github.com/jkroepke/helm-secrets/releases/latest/download/helm-secrets.tar.gz
         - url: https://github.com/databus23/helm-diff/releases/latest/download/helm-diff-linux-amd64.tgz

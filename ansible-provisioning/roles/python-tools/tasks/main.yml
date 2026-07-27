@@ -2,10 +2,9 @@
 - name: install-python-tools-via-pip
   ansible.builtin.pip:
     name:
-      - revChatGPT
       - openai
       - virtualenv
-      - gpt-command-line
-      - aider-chat
     extra_args: --break-system-packages
+
+
 
