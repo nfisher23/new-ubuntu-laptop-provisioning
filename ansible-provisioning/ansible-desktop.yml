@@ -182,11 +182,17 @@
       ansible.builtin.apt:
         name: onedrive
         install_recommends: false
+    - name: Ensure onedrive config directory exists
+      ansible.builtin.file:
+        path: /home/nick/.config/onedrive
+        state: directory
+        mode: '0755'
     - name: copy onedrive sync list
       copy:
         src: dotfiles/onedrive_sync_list
         dest: /home/nick/.config/onedrive/sync_list
       delegate_to: localhost
+
     # gh cli--note, this is untested
     - name: Add GitHub CLI GPG key
       ansible.builtin.get_url:
