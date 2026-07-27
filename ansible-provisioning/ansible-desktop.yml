@@ -195,22 +195,27 @@
 
     # gh cli--note, this is untested
     - name: Add GitHub CLI GPG key
+      become: true
       ansible.builtin.get_url:
         url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
         dest: /usr/share/keyrings/githubcli-archive-keyring.gpg
         mode: '0644'
 
     - name: Add GitHub CLI repository
+      become: true
       ansible.builtin.apt_repository:
         repo: "deb [arch={{ ansible_architecture }} signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
         state: present
     - name: Update apt cache
+      become: true
       ansible.builtin.apt:
         update_cache: yes
     - name: Install gh
+      become: true
       ansible.builtin.apt:
         name: gh
         state: present
+
     - name: Install alacritty
       become: true
       ansible.builtin.apt:
@@ -227,35 +232,43 @@
     # dev tools
     - name: Install Go packages
       command:
-        cmd: "go install {{ item.package }}@latest"
+        cmd: "/usr/local/go/bin/go install {{ item.package }}@latest"
+      environment:
+        PATH: "/usr/local/go/bin:{{ ansible_env.PATH }}"
+        GOPATH: "/home/nick/go"
+        GOTOOLCHAIN: "local"
+
+      ignore_errors: yes
       loop:
+
         - { package: "github.com/gofireflyio/aiac/v3" }
         - { package: "github.com/deepmap/oapi-codegen/cmd/oapi-codegen" }
         - { package: "github.com/spf13/cobra-cli" }
         - { package: "github.com/danielgtaylor/restish" }
-        - { package: "golang.org/x/tools/cmd/godoc@latest" }
-        - { package: "github.com/digitalocean/doctl/cmd/doctl@latest" }
-        - { package: "github.com/nats-io/natscli/nats@latest" }
-        - { package: "golang.org/x/tools/gopls@latest" }
-        - { package: "github.com/golangci/golangci-lint/cmd/golangci-lint@latest" }
-        - { package: "golang.org/x/tools/cmd/goimports@latest" }
-        - { package: "gotest.tools/gotestsum@latest" }
-        - { package: "github.com/go-delve/delve/cmd/dlv@latest" }
-        - { package: "github.com/vektra/mockery/v3@latest" }
-        - { package: "github.com/google/wire/cmd/wire@latest" }
-        - { package: "github.com/golang-migrate/migrate/v4/cmd/migrate@latest" }
-        - { package: "github.com/go-jet/jet/v2/cmd/jet@latest" }
-        - { package: "github.com/vburenin/ifacemaker@latest" }
-        - { package: "github.com/dmarkham/enumer@latest" }
-        - { package: "github.com/sipin/gorazor@latest" }
-        - { package: "github.com/grafana/beyla/cmd/beyla@latest" }
-        - { package: "github.com/nfisher23/ai-template-manager/cmd/ai-template-manager@latest" }
-        - { package: "github.com/kisielk/errcheck@latest" }
-        - { package: "github.com/jmattheis/goverter/cmd/goverter@latest" }
-        - { package: "github.com/rjeczalik/interfaces/cmd/interfacer@latest" }
-        - { package: "honnef.co/go/tools/cmd/staticcheck@latest" }
+        - { package: "golang.org/x/tools/cmd/godoc" }
+        - { package: "github.com/digitalocean/doctl/cmd/doctl" }
+        - { package: "github.com/nats-io/natscli/nats" }
+        - { package: "golang.org/x/tools/gopls" }
+        - { package: "github.com/golangci/golangci-lint/cmd/golangci-lint" }
+        - { package: "golang.org/x/tools/cmd/goimports" }
+        - { package: "gotest.tools/gotestsum" }
+        - { package: "github.com/go-delve/delve/cmd/dlv" }
+        - { package: "github.com/vektra/mockery/v3" }
+        - { package: "github.com/google/wire/cmd/wire" }
+        - { package: "github.com/golang-migrate/migrate/v4/cmd/migrate" }
+        - { package: "github.com/go-jet/jet/v2/cmd/jet" }
+        - { package: "github.com/vburenin/ifacemaker" }
+        - { package: "github.com/dmarkham/enumer" }
+        - { package: "github.com/sipin/gorazor" }
+        - { package: "github.com/grafana/beyla/cmd/beyla" }
+        - { package: "github.com/nfisher23/ai-template-manager/cmd/ai-template-manager" }
+        - { package: "github.com/kisielk/errcheck" }
+        - { package: "github.com/jmattheis/goverter/cmd/goverter" }
+        - { package: "github.com/rjeczalik/interfaces/cmd/interfacer" }
+        - { package: "honnef.co/go/tools/cmd/staticcheck" }
       loop_control:
         label: "{{ item.package }}"
+
 
       # all of this is untested
     - name: Download and install NVM
@@ -267,19 +280,26 @@
 
     - name: Install Node.js LTS version
       shell: |
-        source $HOME/.nvm/nvm.sh
+        . $HOME/.nvm/nvm.sh
         nvm install --lts
         nvm use --lts
         nvm alias default lts/*
+      args:
+        executable: /bin/bash
 
     - name: Ensure npm is up to date
       shell: |
-        source $HOME/.nvm/nvm.sh
+        . $HOME/.nvm/nvm.sh
         npm install -g npm
+      args:
+        executable: /bin/bash
 
     - name: Install global npm packages
       shell: |
-        source $HOME/.nvm/nvm.sh
+        . $HOME/.nvm/nvm.sh
         npm install -g @anthropic-ai/claude-code @google/gemini-cli pnpm
+      args:
+        executable: /bin/bash
+
 
         
