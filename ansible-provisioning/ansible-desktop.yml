@@ -14,11 +14,7 @@
       become: true
       swap_file_size_mb: "16384"
       swap_file_path: /swapfile2
-    - role: geerlingguy.nodejs
-      become: true
-      nodejs_npm_global_packages:
-        - name: jslint
-        - name: node-sass
+
     - { role: anki, become: true }
     - { role: gotmax23.zoom, become: true }
     - { role: mullvad, become: true }
@@ -264,10 +260,9 @@
         source $HOME/.nvm/nvm.sh
         npm install -g npm
 
-    - name: Install npx packages
+    - name: Install global npm packages
       shell: |
         source $HOME/.nvm/nvm.sh
-        npx @anthropic-ai/claude-code
-        npm install -g @google/gemini-cli
-        npm install -g pnpm
+        npm install -g @anthropic-ai/claude-code @google/gemini-cli pnpm
+
         

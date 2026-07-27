@@ -72,5 +72,10 @@
     - whois
     - zip
 
+- name: Fix broken apt packages if any
+  command: apt-get install -f -y
+  changed_when: false
+
 - name: Upgrade installed packages
   apt: upgrade=yes
+
