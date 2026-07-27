@@ -117,14 +117,20 @@ export PATH="$PATH:/home/nick/go/bin"
 export PATH="$PATH:/home/nick/.local/share/JetBrains/Toolbox/scripts"
 export PATH="$PATH:/home/nick/.local/bin"
 
+# gemini
+export GEMINI_CLI_TRUST_WORKSPACE=true
+export GEMINI_CLI_TRUST_WORKSPACE=true
+
 # turn off tilde pasting
 printf "\e[?2004l"
 
 alias dc="docker-compose"
 alias d="docker"
 alias python="python3"
-alias chatgptdev="gpt --model="gpt-4o" dev"
-alias chatgptgen="gpt --model="gpt-4o" general"
+alias chatgptgen="gpt --model='gpt-4o' --temperature 1 general"
+alias chatgptdev="gpt --model='gpt-4o' --temperature 1 dev"
+alias lg="lazygit"
+alias agyd="agy --dangerously-skip-permissions"
 
 gplocal() {
   git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
@@ -132,6 +138,10 @@ gplocal() {
 
 get_digitalocean_monthly_spend() {
   doctl invoice get $(doctl invoice list -o json | jq -r ".invoice_preview.invoice_uuid") -o json | jq -r ".invoice_items[].amount" | awk '{sum += $1} END {print sum}'
+}
+
+get_stj_idea_envs() {
+  env | grep -E 'GOOGLE_CLIENT_SECRET|OPENAI_API|SLACK_API_TOKEN|GEMINI_APP_API_KEY' | tr '\n' ';' | xsel -ib
 }
 
 export GITHUB_USER=nfisher23
@@ -148,10 +158,27 @@ stty -ixon
 export VIMCONFIG=~/.config/nvim
 export VIMDATA=~/.local/share/nvim
 
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/nick/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/nick/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/nick/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/nick/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+
 # Added by Antigravity CLI installer
 export PATH="/home/nick/.local/bin:$PATH"
-
