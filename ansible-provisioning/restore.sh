@@ -23,6 +23,9 @@ echo "Restoring from $BACKUP_FILE_ABS..."
 # they will overwrite the existing directories inside $HOME.
 tar -xzvf "$BACKUP_FILE_ABS" -C "$HOME"
 
+# Clean up stale browser lock files that prevent Chrome/Chromium/Brave from launching
+find "$HOME/.config/google-chrome" "$HOME/.config/chromium" "$HOME/.config/BraveSoftware" -name "Singleton*" -delete 2>/dev/null || true
+
 echo "=========================================="
 echo "Restore complete!"
 echo "Please log out of Ubuntu and log back in, or restart your computer, so the OS can load the restored keyrings."

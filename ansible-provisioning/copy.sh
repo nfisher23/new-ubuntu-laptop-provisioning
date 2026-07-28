@@ -37,7 +37,7 @@ fi
 
 # Package them into a tarball from the context of the home directory
 cd "$HOME" || exit 1
-tar -czvf "$BACKUP_FILE" "${EXISTING_DIRS[@]}"
+tar --exclude="Singleton*" -czvf "$BACKUP_FILE" "${EXISTING_DIRS[@]}"
 
 echo "=========================================="
 echo "Backup complete! File saved to: $BACKUP_FILE"
