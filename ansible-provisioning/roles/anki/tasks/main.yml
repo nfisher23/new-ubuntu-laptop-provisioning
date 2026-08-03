@@ -7,6 +7,12 @@
       - zstd
     state: present
 
+- name: Clean previous extraction directory
+  become: true
+  ansible.builtin.file:
+    path: /tmp/anki
+    state: absent
+
 - name: Create directory
   ansible.builtin.file:
     path: /tmp/anki
@@ -20,10 +26,12 @@
 
 - name: Extract tar file
   become: true
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/anki.tar.zst
     dest: /tmp/anki
+    remote_src: true
 
 - name: Run Anki install script
-  shell: "cd /tmp/anki/{{ anki.tar_version }} && ./install.sh"
+  become: true
+  shell: "cd /tmp/anki/* && ./install.sh"
 
